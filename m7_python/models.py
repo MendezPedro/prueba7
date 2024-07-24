@@ -18,11 +18,17 @@ class Usuario(models.Model):
     }
     tipo_usuario = models.CharField(max_length=12, choices=TIPO_USUARIO)
 
+    def __str__(self) -> str:
+        return f'{self.nombre}'
+
 
 class Comuna(models.Model):
     nombre_comuna = models.CharField(max_length=50)
     region = models.CharField(max_length=50)
 
+    def __str__(self) -> str:
+        return f'{self.nombre_comuna} {self.region}'
+    
 
 class Inmueble(models.Model):
     propietario = models.ForeignKey(Usuario, on_delete=models.DO_NOTHING)
@@ -46,3 +52,5 @@ class Inmueble(models.Model):
     solicitudes = models.JSONField(blank=True)
     arrendatario = models.OneToOneField(Usuario, blank=True, on_delete=models.DO_NOTHING, related_name='arrendatario')
 
+    def __str__(self) -> str:
+        return f'{self.nombre} propietario: {self.propietario} arrendatario: {self.arrendatario}'
