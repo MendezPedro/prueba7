@@ -1,0 +1,11 @@
+rut,nombre,apellido,direccion,telefono_personal,correo_electronico,tipo_usuario
+12345678,Juan,Pérez,Calle Falsa 123,987654321,juan.perez@example.com,arrendatario
+23456789,Ana,López,Av. Siempre Viva 742,876543210,ana.lopez@example.com,arrendador
+34567890,Carlos,Gómez,Paseo de la Reforma 200,765432109,carlos.gomez@example.com,arrendatario
+45678901,María,Fernández,Calle del Olmo 45,654321098,maria.fernandez@example.com,arrendador
+56789012,Pedro,Morales,Av. de la Paz 15,543210987,pedro.morales@example.com,arrendatario
+67890123,Lucía,Ramírez,Calle Luna 23,432109876,lucia.ramirez@example.com,arrendador
+78901234,Sofía,Díaz,Calle Sol 34,321098765,sofia.diaz@example.com,arrendatario
+89012345,Diego,Martínez,Av. del Sol 56,210987654,diego.martinez@example.com,arrendador
+90123456,Elena,García,Paseo del Mar 78,109876543,elena.garcia@example.com,arrendatario
+12345679,Andrés,Castro,Calle Norte 90,198765432,andres.castro@example.com,arrendador
