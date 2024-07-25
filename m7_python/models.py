@@ -7,35 +7,35 @@ from django.contrib.auth.models import User
 class Usuario(models.Model):
     user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
     rut = models.IntegerField(primary_key=True)
-    nombre = models.CharField(max_length=50)
-    apellido = models.CharField(max_length=50)
-    direccion = models.CharField(max_length=200)
-    telefono_personal = models.IntegerField()
-    correo_electronico = models.EmailField()
+    nombre = models.CharField(max_length=50, blank=True, null=True)
+    apellidos = models.CharField(max_length=50, blank=True, null=True)
+    direccion = models.CharField(max_length=200, blank=True, null=True)
+    telefono_personal = models.IntegerField(blank=True, null=True)
+    correo_electronico = models.EmailField(blank=True, null=True)
     TIPO_USUARIO = {
         'arrendatario':'arrendatario',
         'arrendador':'arrendador'
     }
-    tipo_usuario = models.CharField(max_length=12, choices=TIPO_USUARIO)
+    tipo_usuario = models.CharField(max_length=12, choices=TIPO_USUARIO, blank=True)
 
     def __str__(self) -> str:
-        return f'{self.nombre}'
-
+        return f'{self.rut} {self.nombre}'
+    
 
 class Comuna(models.Model):
     nombre_comuna = models.CharField(max_length=50)
     region = models.CharField(max_length=50)
 
     def __str__(self) -> str:
-        return f'{self.nombre_comuna} {self.region}'
-    
+        return f'{self.nombre_comuna} - {self.region}'
+
 
 class Inmueble(models.Model):
     propietario = models.ForeignKey(Usuario, on_delete=models.DO_NOTHING)
     nombre = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=250)
-    m2_construidos = models.FloatField()
-    m2_totales = models.FloatField()
+    m2_construidos = models.FloatField()   
+    m2_totales = models.FloatField()      
     cantidad_estacionamientos = models.IntegerField()
     cantidad_habitaciones = models.IntegerField()
     cantidad_banos = models.IntegerField()
