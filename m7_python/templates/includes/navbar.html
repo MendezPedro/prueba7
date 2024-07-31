@@ -10,16 +10,16 @@
           </li>
           {% if user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link" href="#">Bienvenido</a>
+            <a class="nav-link" href="/crear_inmueble">crear inmueble</a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/inmueble_comuna">inmueble comuna</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/listar">listar</a>
           </li>
           {% endif %}
-          <li class="nav-item">
-            <a class="nav-link" href="#">Acerca</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contacto</a>
-          </li>
-
         </ul>
         {% if not user.is_authenticated %}
         <div class="text-end">
