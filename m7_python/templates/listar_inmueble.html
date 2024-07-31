@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+      <div class="container">
+        <h1 class="py-5 text-center"> App CRUD</h1>
+        <div class="row">
+            <div class="col-7 mx-auto">
+                <form action="" method="post" class="px-5 text-center">
+                    {% csrf_token %}
+                    <input type="text" name="id" value="{{ persona.id }}" hidden>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Nombre Completo</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" name="nombre_completo" value="{{ persona.nombre_completo }}">
+                    </div>
+                    <div class="row pt-3">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label">Peso</label>
+                                <input type="number" class="form-control" name="peso" id="exampleFormControlInput1" value="{{ persona.peso }}">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label">Talla</label>
+                                <input type="number" class="form-control" name="talla" id="exampleFormControlInput1" value="{{ persona.talla }}">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success col-12">Guardar</button>
+                    <a href="{% url 'index' %}" class="btn btn-secondary col-12 mt-2">Volver</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

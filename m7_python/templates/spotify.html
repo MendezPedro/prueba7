@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    
+    <h1 class="my-5 text-center">crear inmueble</h1>
+    <div class="container">
+      <form action="" method="POST"  class="row">
+        {% csrf_token %}
+        <div class="col-5">
+          <select class="form-select" aria-label="Default select example" name="artista" id="select" onchange="getAlbum()">
+            <option selected>Selecciona un Artista</option>
+            {% for artista in artistas %}
+              <option value="{{artista.artistid}}">{{ artista.name  }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="col-5">
+          <select class="form-select" aria-label="Default select example" id="select_artista" name="album">
+            <option value="">----</option>
+            <!-- <option selected>Selecciona un Artista</option>
+            {% for artista in artistas %}
+              <option value="{{artista.artistid}}">{{ artista.name  }}</option>
+            {% endfor %} -->
+          </select>
+        </div>
+        <div class="col-2">
+          <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+      </form>
+
+  </div>
+
+  <div class="container pt-5">
+    <h2 class="text-center pb-4">Listado de Canciones</h2>
+    <hr>
+    <table class="table text-center">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Compositor</th>
+          <th scope="col">Genero</th>
+          <th scope="col">Duracion</th>
+          <th scope="col">Precio</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        {% for track in tracks %}
+          <tr>
+            <th> {{ forloop.counter }}</th>
+            <td>{{ track.name }}</td>
+            <td>{{ track.composer }}</td>
+            <td>{{ track.genreid.name }}</td>
+            <td>{{ track.milliseconds }}</td>
+            <td>$ {{ track.unitprice }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
