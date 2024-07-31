@@ -54,7 +54,9 @@ def actualizar_usuario(request):
 @login_required
 def inmueble_comuna(request):
     user = request.user
-    usuario = Usuario.objects.get(user=user)
+    print(user)
+    usuario = Usuario.objects.get(correo_electronico=user)
+    print(usuario)
     if usuario.tipo_usuario == 'arrendatario':
         if request.method == 'POST':
             comuna = request.POST['comuna']
@@ -65,9 +67,10 @@ def inmueble_comuna(request):
             comunas = Comuna.objects.all()
             return render(request, 'listar_propiedades.html',{'comunas':comunas})
     else:
-        return redirect('perfil')
+        comunas = Comuna.objects.all()
+        return render(request, 'inmueble_comuna.html',{'comunas':comunas})
     
-
+#################### hito #############################
 # b. Poder generar una solicitud de arriendo a la propiedad.
 @login_required
 def solicitud_arriendo(request,id):
@@ -77,7 +80,7 @@ def solicitud_arriendo(request,id):
             f'solicitud_{request.user.username}':request.user.id
         }
     )
-    return redirect('inmueble_comuna')
+    return redirect('inmueble_comuna.html')
 
     
 # 3. Un usuario tipo arrendador debe poder:
@@ -85,22 +88,33 @@ def solicitud_arriendo(request,id):
 # características.
 @login_required
 def crear_inmueble(request):
-    if request.method == 'POST':
+    if request.method =='GET':
+        inmuebles = Inmueble.objects.all()
+        return render(request, 'crear_inmueble.html',{'inmuebles':inmuebles})
+    else:
+        print(request.POST)
         user = request.user
         comuna = Comuna.objects.get(comuna = request.POST['comuna'])
         data = cleaned_data(request.POST) | {'propietario':user, 'comuna':comuna}
         Inmueble.objects.create(**data)
         return redirect('crear_inmueble')
-    else:
-        return render(request, 'crear_inmueble')
 
 
 # b. Listar propiedades en el dashboard.
 @login_required
-def listar_inmueble(request):
+def listar_inmueble(request,id):
+    # user = request.user
+    # usuario = Usuario.objects.get(correo_electronico=user)
+    inmuebles = Inmueble.objects.filter(id=id)
+    return render(request,'listar_inmueble.html',{'inmuebles':inmuebles})
+
+@login_required
+def listar(request):
     user = request.user
-    inmuebles = Inmueble.objects.filter(propietario=user)
-    return render(request,'listar_inmuebles.html',{'inmuebles':inmuebles})
+    usuario = Usuario.objects.get(correo_electronico=user)
+
+    inmuebles = Inmueble.objects.filter(propietario=usuario)
+    return render(request,'listar.html',{'inmuebles':inmuebles})
 
 
 # c. Eliminar y editar sus propiedades.
@@ -117,7 +131,7 @@ def editar_inmueble(request,id):
     Inmueble.objects.filter(id=id).update(**data)
     return redirect('listar_inmuebles')
 
-
+###########################  hito  ##########################################
 # d. Aceptar arrendatarios.
 @login_required
 def aceptar_arrendatarios(request):
