@@ -122,7 +122,7 @@ def listar(request):
 @login_required
 def eliminar_inmueble(request,id):
     Inmueble.objects.get(id=id).delete()
-    return redirect('listar_inmuebles')
+    return redirect('crear_inmueble')
 
 
 @login_required
