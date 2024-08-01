@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 from .models import Usuario, Comuna, Inmueble
 from .utilities import cleaned_data
 # Create your views here.
@@ -52,7 +53,7 @@ def actualizar_usuario(request):
 # Un usuario tipo arrendatario debe poder:
 # a. Listar las propiedades de diversas propiedades de una comuna específica.
 @login_required
-def inmueble_comuna(request):
+def inmueble_comuna2(request):
     user = request.user
     print(user)
     usuario = Usuario.objects.get(correo_electronico=user)
@@ -144,3 +145,36 @@ def aceptar_arrendatarios(request):
     )
     return redirect('listar_inmuebles')
     
+
+
+
+
+
+def inmueble_comuna(request):
+    if request.method == 'POST':
+        inmueble_comuna = Inmueble.objects.all()
+        regiones = set()
+        for region in inmueble_comuna:
+            regiones.add(region.id)
+        regiones = Comuna.objects.filter(id__in=regiones).order_by('nombre_comuna')
+
+
+        region = request.POST['region']
+        region = Comuna.objects.get(id = region)
+        inmuebles = Inmueble.objects.filter(comuna=region).order_by('precio_arriendo')
+        return render(request, 'inmueble_comuna.html', {'regiones':regiones, 'inmuebles':inmuebles})
+
+    else:
+        inmueble_comuna = Inmueble.objects.all()
+        regiones = set()
+        for region in inmueble_comuna:
+            regiones.add(region.id)
+        print(regiones)
+        regiones = Comuna.objects.filter(id__in=regiones).order_by('nombre_comuna')
+        return render(request, 'inmueble_comuna.html', {'regiones':regiones})
+    
+
+def fetch_data(request,id):
+    region = Comuna.objects.get(comunaid=id)
+    album = region.comuna_set.all()
+    return JsonResponse(list(album.values('title', 'albumid')), safe = False)
