@@ -49,8 +49,8 @@ class Inmueble(models.Model):
     tipo_inmueble = models.CharField(choices=TIPO_INMUEBLE, max_length=20)
     precio_arriendo = models.IntegerField()
     disponible = models.BooleanField(default=True)
-    solicitudes = models.JSONField(blank=True)
-    arrendatario = models.OneToOneField(Usuario, blank=True, on_delete=models.DO_NOTHING, related_name='arrendatario')
+    solicitudes = models.JSONField(blank=True, null=True)
+    arrendatario = models.OneToOneField(Usuario, blank=True, null=True, on_delete=models.DO_NOTHING, related_name='arrendatario')
 
     def __str__(self) -> str:
         return f'{self.nombre} propietario: {self.propietario} arrendatario: {self.arrendatario}'
