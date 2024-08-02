@@ -12,7 +12,7 @@ urlpatterns = [
     path('editar_inmueble', views.editar_inmueble, name='editar_inmueble'),
 
     # path('listar_inmueble/<id>', views.listar_inmueble, name='listar_inmueble'),
-    path('editar_inmueble/<id>/', views.listar_inmueble, name='editar_inmueble'),
+    path('editar_inmueble/<id>/', views.editar_inmueble, name='editar_inmueble'),
     # path('editar_inmueble/<id>/', views.editar_inmueble, name='editar_inmueble'),
 
 
@@ -24,5 +24,7 @@ urlpatterns = [
 
 
     path('eliminar_inmueble/<id>/', views.eliminar_inmueble, name='eliminar_inmueble'),
+
+    path('solicitud_arriendo/<id>/', views.solicitud_arriendo, name='solicitud_arriendo'),
 ]
 
