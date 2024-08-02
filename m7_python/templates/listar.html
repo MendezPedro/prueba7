@@ -5,27 +5,45 @@
     <table class="table">
         <thead>
             <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nombre Completo</th>
-            <th scope="col">Peso[gr]</th>
-            <th scope="col">Talla[cm]</th>
-            <th scope="col">Opcion</th>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">m2 Construidos</th>
+                <th scope="col">m2 Totales</th>
+                <th scope="col">Estacionamientos</th>
+                <th scope="col">Habitaciones</th>
+                <th scope="col">Baños</th>
+                <th scope="col">Dirección</th>
+                <th scope="col">Comuna</th>
+                <th scope="col">Tipo de Inmueble</th>
+                <th scope="col">Precio Arriendo</th>
+                <th scope="col">Disponible</th>
+                <th scope="col">Opciones</th>
             </tr>
         </thead>
         <tbody>
             {% for inmueble in inmuebles %}
                 <tr>
-                    <th>{{forloop.counter}}</th>
+                    <th scope="row">{{ forloop.counter }}</th>
                     <td>{{ inmueble.nombre }}</td>
-                    <td>{{ inmueble.peso }}</td>
-                    <td>{{ inmueble.talla }}</td>
+                    <td>{{ inmueble.descripcion }}</td>
+                    <td>{{ inmueble.m2_construidos }}</td>
+                    <td>{{ inmueble.m2_totales }}</td>
+                    <td>{{ inmueble.cantidad_estacionamientos }}</td>
+                    <td>{{ inmueble.cantidad_habitaciones }}</td>
+                    <td>{{ inmueble.cantidad_banos }}</td>
+                    <td>{{ inmueble.direccion }}</td>
+                    <td>{{ inmueble.comuna.nombre_comuna }}</td>  <!-- Asegúrate de tener el campo `nombre_comuna` en el modelo Comuna -->
+                    <td>{{ inmueble.tipo_inmueble }}</td>
+                    <td>${{ inmueble.precio_arriendo }}</td>
+                    <td>{{ inmueble.disponible|yesno:"Sí,No" }}</td>
                     <td>
-                        <a href="listar_inmueble/{{inmueble.id}}" class="btn btn-info">
+                        <a href="{% url 'editar_inmueble' inmueble.id %}" class="btn btn-info">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                                 <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
                             </svg>
                         </a>
-                        <a href="" class="btn btn-danger"  data-bs-toggle="modal" data-bs-target="#exampleModal{{forloop.counter}}">
+                        <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ forloop.counter }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-x" viewBox="0 0 16 16">
                                 <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
                                 <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m-.646-4.854.646.647.646-.647a.5.5 0 0 1 .708.708l-.647.646.647.646a.5.5 0 0 1-.708.708l-.646-.647-.646.647a.5.5 0 0 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 .708-.708"/>
@@ -33,27 +51,28 @@
                         </a>
                     </td>
                 </tr>
-
+    
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal{{forloop.counter}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="exampleModal{{ forloop.counter }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Estas seguro que deseas eliminar:</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">¿Estás seguro que deseas eliminar?</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h5>{{ inmueble.nombre }}</h5>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <a href="{% url 'eliminar_inmueble' inmueble.id %}" class="btn btn-danger">Eliminar</a>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                            <h5>{{inmueble.nombre_completo}}</h5>
-                        </div>
-                        <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <a href="eliminar_datos/{{inmueble.id}}"><button type="button" class="btn btn-danger">Eliminar</button></a>
-                        </div>
-                    </div>
                     </div>
                 </div>
             {% endfor %}
         </tbody>
-        </table>
+    </table>
+    
 </div>
 {% endblock %}

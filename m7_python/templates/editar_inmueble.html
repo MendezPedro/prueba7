@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="py-5 text-center">Editar Inmueble</h1>
+        <div class="row">
+            <div class="">
+                <form action="" method="post" class="px-5 text-center">
+                    {% csrf_token %}
+                    <input type="text" name="id" value="{{ inmueble.id }}" hidden>
+
+                    <div class="mb-3">
+                        <label for="propietario" class="form-label">Propietario</label>
+                        <input type="text" class="form-control" id="propietario" name="propietario" value="{{ inmueble.propietario.rut }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" value="{{ inmueble.nombre }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">Descripción</label>
+                        <input class="form-control" id="descripcion" name="descripcion" value="{{ inmueble.descripcion }}" required></input>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="m2_construidos" class="form-label">Metros Construidos</label>
+                        <input type="number" step="0.01" class="form-control" id="m2_construidos" name="m2_construidos" value="{{ inmueble.m2_construidos }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="m2_totales" class="form-label">Metros Totales</label>
+                        <input type="number" step="0.01" class="form-control" id="m2_totales" name="m2_totales" value="{{ inmueble.m2_totales }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cantidad_estacionamientos" class="form-label">Cantidad de Estacionamientos</label>
+                        <input type="number" class="form-control" id="cantidad_estacionamientos" name="cantidad_estacionamientos" value="{{ inmueble.cantidad_estacionamientos }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cantidad_habitaciones" class="form-label">Cantidad de Habitaciones</label>
+                        <input type="number" class="form-control" id="cantidad_habitaciones" name="cantidad_habitaciones" value="{{ inmueble.cantidad_habitaciones }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cantidad_banos" class="form-label">Cantidad de Baños</label>
+                        <input type="number" class="form-control" id="cantidad_banos" name="cantidad_banos" value="{{ inmueble.cantidad_banos }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="direccion" class="form-label">Dirección</label>
+                        <input type="text" class="form-control" id="direccion" name="direccion" value="{{ inmueble.direccion }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="comuna" class="form-label">Comuna</label>
+                        <input type="text" class="form-control" id="comuna" name="comuna" value="{{ inmueble.comuna.id }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tipo_inmueble" class="form-label">Tipo de Inmueble</label>
+                        <select class="form-control" id="tipo_inmueble" name="tipo_inmueble" required>
+                            <option value="casa">Casa</option>
+                            <option value="departamento">Departamento</option>
+                            <option value="parcela">Parcela</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="precio_arriendo" class="form-label">Precio de Arriendo</label>
+                        <input type="number" class="form-control" id="precio_arriendo" name="precio_arriendo" value="{{ inmueble.precio_arriendo }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="disponible" class="form-label">Disponible</label>
+                        <select class="form-control" id="disponible" name="disponible" required>
+                            <option value="True">Sí</option>
+                            <option value="False">No</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success col-12">Guardar</button>
+                    <a href="{% url 'crear_inmueble' %}" class="btn btn-secondary col-12 mt-2">Volver</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

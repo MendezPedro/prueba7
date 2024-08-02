@@ -45,7 +45,7 @@
                             <li>Precio: ${{ inmueble.precio_arriendo }}</li>
                             <li>Disponible: {{ inmueble.disponible|yesno:"Sí,No" }}</li>
                         </ul>
-                        <a href="#" class="btn btn-primary">Ver detalles</a>
+                        <a href="{% url 'solicitud_arriendo' inmueble.id %}" class="btn btn-primary">Solicitar</a>
                     </div>
                 </div>
             </div>

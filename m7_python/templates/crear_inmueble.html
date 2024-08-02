@@ -9,6 +9,7 @@
             <div class="my-5">
                 <form action="" method="post" class="px-5 text-center">
                     {% csrf_token %}
+                    
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
                         <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa el nombre del inmueble" required>
@@ -42,8 +43,16 @@
                         <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección del inmueble" required>
                     </div>
                     <div class="mb-3">
-                        <label for="comuna" class="form-label">Comuna</label>
-                        <input type="text" class="form-control" id="comuna" name="comuna" placeholder="Comuna" required>
+                        <label for="comuna" class="form-label">comuna</label>
+                        <select class="form-control" id="comuna" name="comuna" required>
+                            {% for comuna in comunas %}
+                                <option value="{{ comuna.id }}" selected>
+                                    {{ comuna.nombre_comuna }}
+                                </option>
+                            {% empty %}
+                                <option disabled>No hay comunas disponibles</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="tipo_inmueble" class="form-label">Tipo de Inmueble</label>
@@ -60,8 +69,8 @@
                     <div class="mb-3">
                         <label for="disponible" class="form-label">Disponible</label>
                         <select class="form-control" id="disponible" name="disponible" required>
-                            <option value="true">Sí</option>
-                            <option value="false">No</option>
+                            <option value="True">Sí</option>
+                            <option value="False">No</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary col-12">Crear Inmueble</button>

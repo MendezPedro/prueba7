@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import JsonResponse
@@ -79,9 +79,10 @@ def solicitud_arriendo(request,id):
     inmueble.update(
         solicitudes={
             f'solicitud_{request.user.username}':request.user.id
-        }
+        },
+        disponible=False
     )
-    return redirect('inmueble_comuna.html')
+    return redirect('inmueble_comuna')
 
     
 # 3. Un usuario tipo arrendador debe poder:
@@ -91,12 +92,17 @@ def solicitud_arriendo(request,id):
 def crear_inmueble(request):
     if request.method =='GET':
         inmuebles = Inmueble.objects.all()
-        return render(request, 'crear_inmueble.html',{'inmuebles':inmuebles})
+        propietarios = Usuario.objects.all()
+        comunas = Comuna.objects.all()
+        print(propietarios)
+        return render(request, 'crear_inmueble.html',{'inmuebles':inmuebles, 'propietarios':propietarios, 'comunas':comunas})
     else:
         print(request.POST)
         user = request.user
-        comuna = Comuna.objects.get(comuna = request.POST['comuna'])
-        data = cleaned_data(request.POST) | {'propietario':user, 'comuna':comuna}
+        print(user)
+        comuna = Comuna.objects.get(id = request.POST['comuna'])
+        data = cleaned_data(request.POST) | {'propietario': Usuario.objects.get(user=user), 'comuna': comuna}
+        print(data)
         Inmueble.objects.create(**data)
         return redirect('crear_inmueble')
 
@@ -127,10 +133,25 @@ def eliminar_inmueble(request,id):
 
 @login_required
 def editar_inmueble(request,id):
-    comuna = Comuna.objects.get(comuna = request.POST['comuna'])
-    data = cleaned_data(request.POST) | {'comuna':comuna}
-    Inmueble.objects.filter(id=id).update(**data)
-    return redirect('listar_inmuebles')
+    if request.method == 'GET':
+        inmueble = Inmueble.objects.get(id=id)
+        return render(request,'editar_inmueble.html',{'inmueble':inmueble})
+    else:
+        inmueble = get_object_or_404(Inmueble, id=id)
+        comuna = Comuna.objects.all()  
+        # comuna = Comuna.objects.get(comuna = request.POST['comuna'])
+        data = cleaned_data(request.POST)
+        print(data)
+        Inmueble.objects.filter(id=id).update(**data)
+        return redirect('crear_inmueble')
+
+# def editar_inmueble(request,id):
+#     inmueble = get_object_or_404(Inmueble, id=id)
+#     comuna = Comuna.objects.all()  
+#     # comuna = Comuna.objects.get(comuna = request.POST['comuna'])
+#     data = cleaned_data(request.POST) | {'comuna':comuna}
+#     Inmueble.objects.filter(id=id).update(**data)
+#     return redirect('listar_inmuebles')
 
 ###########################  hito  ##########################################
 # d. Aceptar arrendatarios.
@@ -144,10 +165,6 @@ def aceptar_arrendatarios(request):
         disponible=False
     )
     return redirect('listar_inmuebles')
-    
-
-
-
 
 
 def inmueble_comuna(request):
