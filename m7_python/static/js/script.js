@@ -7,7 +7,7 @@ function getComuna(){
     .then((response)=> response.json())
     .then((regiones) => {
       console.log(regiones)
-      regiones = regiones
+
       renderCiudades(regiones)
     })
   };
