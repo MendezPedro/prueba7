@@ -1,17 +1,19 @@
-Rental Ski
+# Rental Ski
 
-Realizado por: Pedro Méndez
+**Realizado por:** Pedro Méndez
 
-Descripción
+## Descripción
 
 Entre estos está Carlos Araya, que ha decidido abrir un rental de ski en la subida del volcán Villarrica. Para esto, don Carlos desea implementar un sitio web donde sus clientes puedan reservar skis y, tras la devolución del equipo, se puedan anotar observaciones sobre su estado. Este proyecto tiene como objetivo crear una DEMO de la plataforma para convencer a don Carlos de contratar tus servicios como desarrollador(a) de software, utilizando el stack Python/Django y el framework CSS Bootstrap. La meta es desarrollar una aplicación web escalable y robusta con tiempos de implementación eficientes.
 
-Instalación y Configuración
+## Instalación y Configuración
 
-Clonar el Repositorio
+### Clonar el Repositorio
 
+```bash
 git clone <URL del repositorio>
 cd <directorio del repositorio>
+
 
 Instalar Dependencias
 
